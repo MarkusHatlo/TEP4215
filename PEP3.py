@@ -45,7 +45,7 @@ def calc_q(stream):
     q_list = []
     q_list_tot = []
     for duty in stream.values(): 
-        t_diff = duty['InletT'] - duty['FinalT']
+        t_diff = abs(duty['InletT'] - duty['FinalT'])
         q = duty['mCp'] * t_diff
 
         q_list.append(q)
@@ -71,16 +71,24 @@ def get_temp_list(stream):
 hot_temps = get_temp_list(hot_stream)
 cold_temps = get_temp_list(cold_stream)
 
-print(q_hot,q_hot_tot,hot_temps)
+#print(q_hot,q_hot_tot,hot_temps)
 
-plt.figure(figsize=(8,8))
+# plt.figure(figsize=(8,8))
 
-plt.plot(q_hot_tot, hot_temps, marker='o', linestyle='-', color="purple", label="Hot Composite Curve")
-plt.plot(q_cold, cold_temps, marker='o', linestyle='-', color="blue", label="Cold Composite Curve")
-plt.plot(1000,100,color="white")
-plt.show()
+# plt.plot([q_hot_tot[0],0] ,[hot_stream["H1"]["InletT"],hot_stream["H1"]["FinalT"]] , marker='o', linestyle='-', color="purple", label="Hot Composite Curve")
+# plt.plot([q_hot_tot[1],q_hot_tot[0]] ,[hot_stream["H2"]["InletT"],hot_stream["H2"]["FinalT"]] , marker='o', linestyle='-', color="purple", label="Hot Composite Curve")
 
+# plt.plot([q_hot_tot[1],q_hot_tot[1] + q_cold_tot[0]] ,[cold_stream["C1"]["InletT"],cold_stream["C1"]["FinalT"]] , marker='o', linestyle='-', color="blue", label="cold Composite Curve")
+# plt.plot([q_hot_tot[1] + q_cold_tot[0],q_hot_tot[1] + q_cold_tot[1]] ,[cold_stream["C2"]["InletT"],cold_stream["C2"]["FinalT"]] , marker='o', linestyle='-', color="blue", label="cold Composite Curve")
 
+# #plt.plot(, , marker='o', linestyle='-', color="blue", label="Cold Composite Curve")
+# plt.plot(1000,100,color="white")
+# plt.show()
+
+all_temp = [hot_stream["H1"]["InletT"],hot_stream["H1"]["FinalT"],hot_stream["H2"]["InletT"],hot_stream["H2"]["FinalT"]]
+all_temp.sort()
+
+print(all_temp)
 
 
 
