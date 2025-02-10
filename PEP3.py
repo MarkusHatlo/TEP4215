@@ -73,7 +73,7 @@ cold_temps = get_temp_list(cold_stream)
 
 #print(q_hot,q_hot_tot,hot_temps)
 
-# plt.figure(figsize=(8,8))
+plt.figure(figsize=(8,8))
 
 # plt.plot([q_hot_tot[0],0] ,[hot_stream["H1"]["InletT"],hot_stream["H1"]["FinalT"]] , marker='o', linestyle='-', color="purple", label="Hot Composite Curve")
 # plt.plot([q_hot_tot[1],q_hot_tot[0]] ,[hot_stream["H2"]["InletT"],hot_stream["H2"]["FinalT"]] , marker='o', linestyle='-', color="purple", label="Hot Composite Curve")
@@ -85,10 +85,10 @@ cold_temps = get_temp_list(cold_stream)
 # plt.plot(1000,100,color="white")
 # plt.show()
 
-all_temp = [hot_stream["H1"]["InletT"],hot_stream["H1"]["FinalT"],hot_stream["H2"]["InletT"],hot_stream["H2"]["FinalT"]]
-all_temp.sort()
+# all_temp = [hot_stream["H1"]["InletT"],hot_stream["H1"]["FinalT"],hot_stream["H2"]["InletT"],hot_stream["H2"]["FinalT"]]
+# all_temp.sort()
 
-print(all_temp)
+# print(all_temp)
 
 
 
