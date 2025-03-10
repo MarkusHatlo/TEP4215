@@ -36,6 +36,11 @@ def logMeanTemp(Tleft,Tright):
 Tlms = []
 
 def calculations(Q11,Q12,Q21,Q22):
+
+    if any(q < 0 for q in [Q11, Q12, Q21, Q22]):
+        return None
+
+
     Qs = [Q11,Q12,Q21,Q22]
     Tlm = []
     A = []
@@ -51,6 +56,21 @@ def calculations(Q11,Q12,Q21,Q22):
     TC1B = TC1A + Q11/mCp1C
     TC2A = TC2cold + Q12/mCp1C
     TC2B = TC2A + Q22/mCp1C    
+
+    if Q11 + Q12 > H1req or Q21 + Q22 > H2req:
+        return None
+    if Q11 + Q21 > C1req or Q12 + Q22 > C2req:
+        return None
+    
+    # Check 2nd law of thermodynamics (hot stream must be hotter than cold stream)
+    if Q11 > 0 and (TH1_hot <= TC1B or TH1A <= TC1A):
+        return None
+    if Q12 > 0 and (TH1A <= TC2B or TH1B <= TC2A):
+        return None
+    if Q21 > 0 and (TH2A <= TC1B or TH2B <= TC1A):
+        return None
+    if Q22 > 0 and (TH2_hot <= TC2B or TH2A <= TC2A):
+        return None
 
     #Tlm for Q11
     if Q21 == 0:
@@ -97,6 +117,8 @@ def calculations(Q11,Q12,Q21,Q22):
 
 opeList = []
 capList = []
+numbber_of_exchangers = 0
+
 
 for i in range(1000):
     Q11 = random.randint(10,500)
@@ -104,8 +126,12 @@ for i in range(1000):
     Q21 = random.randint(10,500)
     Q22 = random.randint(10,500)
     opeCost, capCost = calculations(Q11,Q12,Q21,Q22)
-    opeList.append(opeCost)
-    capList.append(capCost)
+    if opeCost and capCost is not None:
+        opeList.append(opeCost)
+        capList.append(capCost)
+        numbber_of_exchangers += 1
+
+print(numbber_of_exchangers)
 
 
 
