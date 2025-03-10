@@ -167,6 +167,9 @@ total_emissions = [d['total_emissions'] for d in designs]
 min_cost_idx = np.argmin(total_costs)
 min_emissions_idx = np.argmin(total_emissions)
 
+problem1_solution = evaluate_design(500, 0, 0, 400)
+
+#Plot for problem 4
 plt.figure(figsize=(10, 8))
 plt.scatter(operating_costs, capital_costs, alpha=0.7, label='Feasible Designs')
 
@@ -174,10 +177,31 @@ plt.scatter(operating_costs[min_cost_idx], capital_costs[min_cost_idx],
             color='red', s=100, marker='*', label='Min. Lifetime Cost')
 plt.scatter(operating_costs[min_emissions_idx], capital_costs[min_emissions_idx], 
             color='green', s=100, marker='*', label='Min. Lifetime Emissions')
+plt.scatter(problem1_solution['operating_cost'], problem1_solution['capital_cost'], 
+                color='blue', s=100, marker='*', label='Problem 1 Solution')
 
 plt.xlabel('Operating Cost (NOK)')
 plt.ylabel('Capital Cost (NOK)')
 plt.title('Pareto Chart: Capital Cost vs Operating Cost')
+plt.grid(True)
+plt.legend()
+plt.tight_layout()
+plt.show()
+
+#Plot for problem 5
+plt.figure(figsize=(10, 8))
+plt.scatter(total_costs, total_emissions, alpha=0.7, label='Feasible Designs')
+
+plt.scatter(total_costs[min_cost_idx], total_emissions[min_cost_idx], 
+            color='red', s=100, marker='*', label='Min. Lifetime Cost')
+plt.scatter(total_costs[min_emissions_idx], total_emissions[min_emissions_idx], 
+            color='green', s=100, marker='*', label='Min. Lifetime Emissions')
+plt.scatter(problem1_solution['operating_cost'], problem1_solution['capital_cost'], 
+                color='blue', s=100, marker='*', label='Problem 1 Solution')
+
+plt.xlabel('Lifetime Costs (NOK)')
+plt.ylabel('Lifetime GHG Emissions (kgCO2e)')
+plt.title('Pareto Chart: Lifetime GHG Emissions vs Lifetime Costs')
 plt.grid(True)
 plt.legend()
 plt.tight_layout()
