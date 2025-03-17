@@ -164,7 +164,12 @@ def particle_swarm_optimization():
     P_data = evaluate_design(500, 0, 0, 400)
     weight = 0.5
     P_initial = weight*total_costs + (1-weight)*total_emissions
-
+    w1 = 2.8
+    w2 = 1.3
+    d1 = 0.0165
+    d2 = 0.158
+    d3 = 0.180
+    
 
 
     return 
