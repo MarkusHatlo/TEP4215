@@ -117,15 +117,13 @@ def optimize_and_plot():
         results.append(result)
         J_values.append(J)
     
-    # Find the index of the minimum J value
-    min_idx = np.argmin(J_values)
+    # Find minimum using scipy optimizer
+    result = minimize_scalar(objective_function, bounds=(30, 93), method='bounded')
+    optimal_T2 = result.x
+    min_cost = result.fun
     
-    # Get the optimal temperature and corresponding minimum cost
-    optimal_T2 = T2_range[min_idx]
-    min_cost = J_values[min_idx]
-    
-    # Get the details at the optimal point
-    optimal_details = results[min_idx]
+    # Get detailed results at optimal point
+    _, optimal_details = evaluate_system(optimal_T2)
     
     # Print optimization results
     print("=== Optimization Results ===")
@@ -153,7 +151,7 @@ def optimize_and_plot():
     plt.axvline(x=optimal_T2, color='g', linestyle='-', label=f'Optimal T2: {optimal_T2:.2f}°C')
     
     # Add a point to mark the minimum cost location
-    plt.plot(optimal_T2, min_cost, 'ro', markersize=10, label=f'Minimum: {min_cost:.2f} NOK/kmol at {optimal_T2:.2f}°C')
+    plt.plot(optimal_T2, min_cost, 'ro', markersize=10, label=f'Minimum: {min_cost:.2f} NOK/kmol')
     
     # Add labels and title
     plt.xlabel('Preheating Temperature T2 (°C)', fontsize=12)
@@ -162,12 +160,12 @@ def optimize_and_plot():
     plt.grid(True)
     plt.legend(fontsize=10)
     
-    # # Add annotations for the minimum point
-    # plt.annotate(f'({optimal_T2:.2f}°C, {min_cost:.2f} NOK/kmol)',
-    #             xy=(optimal_T2, min_cost),
-    #             xytext=(optimal_T2+5, min_cost+10000),
-    #             arrowprops=dict(facecolor='black', shrink=0.05, width=1.5),
-    #             fontsize=10)
+    # Add annotations for the minimum point
+    plt.annotate(f'({optimal_T2:.2f}°C, {min_cost:.2f} NOK/kmol)',
+                xy=(optimal_T2, min_cost),
+                xytext=(optimal_T2+5, min_cost+10000),
+                arrowprops=dict(facecolor='black', shrink=0.05, width=1.5),
+                fontsize=10)
     
     plt.tight_layout()
     plt.show()
